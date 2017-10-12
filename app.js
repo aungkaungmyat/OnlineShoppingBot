@@ -130,6 +130,7 @@ app.post("/webhook", function (req, res) {
   // for facebook verification
   app.get('/webhook/', function (req, res) {
       if (req.query['hub.verify_token'] === process.env.VERIFICATION_TOKEN) {
+        console.log('got user')
         res.send(req.query['hub.challenge'])
       } else {
           res.send('Error, wrong token')
@@ -138,6 +139,7 @@ app.post("/webhook", function (req, res) {
   
   // to post data
   app.post('/webhook/', function (req, res) {
+      console.log('got  post req');
       let messaging_events = req.body.entry[0].messaging
       for (let i = 0; i < messaging_events.length; i++) {
           let event = req.body.entry[0].messaging[i]
@@ -149,6 +151,7 @@ app.post("/webhook", function (req, res) {
                   //sendGenericMessage(sender)
                   continue
               }
+              console.log('b4 sending text')
               sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
           }
           if (event.postback) {
