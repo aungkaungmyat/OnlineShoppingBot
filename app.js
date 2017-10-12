@@ -84,7 +84,9 @@ app.post("/webhook", function (req, res) {
       }
     }, function(error, response, body) {
       if (error) {
-        console.log("Error sending message: " + response.error);
+        console.log("Error's sending message: " + response.error);
       }
     });
   }
+
+  
