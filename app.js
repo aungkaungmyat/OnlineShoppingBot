@@ -36,6 +36,9 @@ app.post("/webhook", function (req, res) {
           if (event.postback) {
             processPostback(event);
           }
+          if (event.message){
+              processMessage(event);
+          }
         });
       });
   
@@ -89,4 +92,18 @@ app.post("/webhook", function (req, res) {
     });
   }
 
+
+  // reply message to wait
+  function processMessage(event){
+    if (!event.message.is_echo) {
+        var message = event.message;
+        var senderId = event.sender.id;
+    
+        console.log("Received message from senderId: " + senderId);
+        console.log("Message is: " + JSON.stringify(message));
+    }
+    else if (message.attachments) {
+        sendMessage(senderId, {text: "Sorry, I don't understand your request."});
+      }
+  }
   
